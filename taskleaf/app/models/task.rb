@@ -6,6 +6,7 @@ class Task < ApplicationRecord
   # 自作のバリデーションを作った場合は validate にメソッド名を渡す
   validate :validate_name_not_including_comma
 
+  belongs_to :user
   private
   def set_nameless_name
     if name.blank?

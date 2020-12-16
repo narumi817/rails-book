@@ -10,4 +10,6 @@ class User < ApplicationRecord
   validates :name, presence: true
   # uniqueness: オブジェクトが保存される直前に属性の値が一意で重複してないことを検証する(SQL発行することで確認される)
   validates :email, presence: true, uniqueness: true
+
+  has_many :tasks
 end

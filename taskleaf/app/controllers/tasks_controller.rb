@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all
+    @tasks = current_user.tasks
   end
 
   def new
@@ -9,7 +9,11 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    # 下の2行は同じことしてる
+    # パラメータで取得したデータにログインユーザのIDを追加してタスクをnewする
+    # @task = Task.new(task_params.merge(user_id: current_user.id))
+    # ログインユーザの持ってるタスクに新しいタスクを追加するイメージ（だと思う）
+    @task = current_user.tasks.new(task_params)
 
       # save では検証がエラーになると falseが返ってくる (save! だと検証エラーになると例外が発生する) 
       # 検証に問題なければDBに保存される
@@ -22,11 +26,11 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 
   def update
